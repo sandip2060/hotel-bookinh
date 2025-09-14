@@ -26,9 +26,11 @@ app.use(clerkMiddleware())
 app.use("/api/clerk", clerkWebhooks);
 
 app.get('/', (req, res) => res.send("API is working"))
-app.use("/api/user", userRouter)
-app.use("/api/hotels", hotelRouter)
-app.use("/api/rooms", roomRouter)
+app.use('/api/user', userRouter)
+app.use('/api/hotels', hotelRouter)
+app.use('/api/rooms', roomRouter)
+app.use('/api/bookings', bookin )
+
 
 
 const PORT = process.env.PORT || 3000;
