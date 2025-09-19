@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react'
 import Title from '../../components/Title'
 import { assets } from '../../assets/assets'
-import { useAppContext } from '../../hooks/useAppContext.js'
+import { useAppContext } from '../../context/AppContext.jsx'
 
 const Dashboard = () => {
 

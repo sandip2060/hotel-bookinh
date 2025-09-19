@@ -4,14 +4,7 @@ import { Webhook } from "svix";
 
 const clerkWebhookHandler = async (req, res) => {
     try {
-        console.log('🔔 Clerk Webhook received at:', new Date().toISOString());
-        console.log('📨 Headers:', {
-            'svix-id': req.headers['svix-id'],
-            'svix-timestamp': req.headers['svix-timestamp'],
-            'svix-signature': req.headers['svix-signature'] ? 'present' : 'missing',
-            'content-type': req.headers['content-type']
-        });
-        console.log('📦 Body length:', req.body ? req.body.length : 0);
+        console.log('Webhook received:', req.headers);
         
         // Create a Svix instance with clerk webhook secret
         const whook = new Webhook(process.env.CLERK_WEBHOOK_SECRET);
@@ -51,23 +44,21 @@ const clerkWebhookHandler = async (req, res) => {
         // Switch Case for different types of events
         switch (type) {
             case "user.created": {
-                console.log('👤 Creating new user:', userData.email);
+                console.log('Creating user:', userData);
                 const newUser = await User.create(userData);
-                console.log('✅ User created successfully in database:', newUser._id);
-                console.log('📊 Total users now:', await User.countDocuments());
+                console.log('User created successfully:', newUser._id);
                 break;
             }
             case "user.updated": {
-                console.log('🔄 Updating user:', userData.email);
+                console.log('Updating user:', userData._id);
                 await User.findByIdAndUpdate(data.id, userData);
-                console.log('✅ User updated successfully in database');
+                console.log('User updated successfully');
                 break;
             }
             case "user.deleted": {
-                console.log('🗑️ Deleting user:', data.id);
+                console.log('Deleting user:', data.id);
                 await User.findByIdAndDelete(data.id);
-                console.log('✅ User deleted successfully from database');
-                console.log('📊 Total users now:', await User.countDocuments());
+                console.log('User deleted successfully');
                 break;
             }
             default:
@@ -75,7 +66,6 @@ const clerkWebhookHandler = async (req, res) => {
                 break;
         }
 
-        console.log('🎉 Webhook processed successfully');
         res.json({success: true, message: "Webhook processed successfully"});
 
     } catch (error) {

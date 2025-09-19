@@ -10,26 +10,6 @@ import connectCloudinary from "./configs/cloudinary.js";
 import roomRouter from "./routes/roomRoutes.js";
 import bookingRouter from "./routes/bookingRoutes.js";
 
-// Validate required environment variables
-const requiredEnvVars = [
-    'MONGODB_URI',
-    'CLERK_PUBLISHABLE_KEY', 
-    'CLERK_SECRET_KEY',
-    'CLERK_WEBHOOK_SECRET',
-    'CLOUDINARY_CLOUD_NAME',
-    'CLOUDINARY_API_KEY',
-    'CLOUDINARY_API_SECRET'
-];
-
-const missingVars = requiredEnvVars.filter(varName => !process.env[varName]);
-if (missingVars.length > 0) {
-    console.error('❌ Missing required environment variables:', missingVars);
-    process.exit(1);
-}
-
-console.log('✅ All required environment variables are present');
-console.log(`🔐 Clerk Webhook Secret configured: ${process.env.CLERK_WEBHOOK_SECRET ? 'YES' : 'NO'}`);
-console.log(`🌍 Webhook URL should be: http://localhost:3000/api/clerk`);
 
 connectDB()
 connectCloudinary();
@@ -50,14 +30,7 @@ app.get('/api/test', async (req, res) => {
     try {
         const User = (await import('./models/User.js')).default;
         const userCount = await User.countDocuments();
-        const users = await User.find({}, 'username email _id createdAt').limit(5);
-        res.json({
-            success: true, 
-            message: `Database connected. Users in DB: ${userCount}`,
-            recentUsers: users,
-            webhookEndpoint: '/api/clerk',
-            timestamp: new Date().toISOString()
-        });
+        res.json({success: true, message: `Database connected. Users in DB: ${userCount}`});
     } catch (error) {
         res.json({success: false, message: error.message});
     }

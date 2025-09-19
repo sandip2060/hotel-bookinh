@@ -2,7 +2,7 @@ import React from 'react'
 
 import HotelCard from './HotelCard'
 import Title from './Title'
-import { useAppContext } from '../hooks/useAppContext.js';
+import { useAppContext } from '../context/AppContext.jsx';
 import { roomsDummyData } from '../assets/assets';
 
  const FeatureDestination = () => {

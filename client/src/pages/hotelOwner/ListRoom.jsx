@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useCallback } from 'react'
 import Title from '../../components/Title'
 import { toast } from 'react-hot-toast'
-import { useAppContext } from '../../hooks/useAppContext.js'
+import { useAppContext } from '../../context/AppContext.jsx'
 
 const ListRoom = () => {
 
