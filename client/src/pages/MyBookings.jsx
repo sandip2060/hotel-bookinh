@@ -5,7 +5,7 @@ import {assets, userBookingsDummyData} from '../assets/assets'
 const MyBookings = () => {
 
 
-    const [bookings, setBookings] = useState(userBookingsDummyData)
+    const [bookings] = useState(userBookingsDummyData)
 
 
   return (
